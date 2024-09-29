@@ -230,145 +230,163 @@ def display_text_fnc(frame: np.ndarray, display_text: str, index: int):
     cv2.putText(frame, display_text, text_loc, FONT_STYLE, FONT_SIZE, FONT_COLOR)
 
 
+from spotify_api import getSimilarSong
+
 
 
 lock = threading.Lock()
 
 app = Flask(__name__)
+from multiprocessing import Manager
+import time
 
-predictions = [[0,0,0,0] for i in range(20)]
+# Initialize Flask app
+app = Flask(__name__)
+
+
 
 @app.route('/get_floats', methods=['GET'])
 def get_floats():
-    lock.acquire()
-    ans = [0,0,0,0]
-    for i in range(20):
-        for j in range(4):
-            ans[j] += predictions[0][j]
-    ans = [i/20.0 for i in ans]
-    ans[2] = ans[2] * 180.0
-    lock.release()
-    # Return the floats in a JSON response
-    return jsonify(getSimilarSong(ans))
+    for i in range(5):
+        try:
+            file = open("shared.txt","r")
+            ans = [float(i) for i in file.read().split(',')[0:4]]
+            #print(test)
+            # Return the floats in a JSON response
+            return jsonify(getSimilarSong(ans))
+        except:
+            continue
 
-from spotify_api import getSimilarSong
 
 
 def constant_predict():
+    
+    global predictions
+    predictions = []
     # Decoder initialization
     sim_de, sim_out_de, simple_regression_compiled = model_init("simple_regression_model.onnx", device.value)
     frames2decode = 1
     
-    def run_ai_dj(use_webcam):
-        global predictions
-        global kill_flag
-        
-        source = "1.mp4"
-    
-        skip_first_frames = 0
-        flip = True
-        size = height_en  # Endoder input size - From Cell 5_9
-        sample_duration = frames2decode  # Decoder input size - From Cell 5_7
-        # Select frames per second of your source.
-        size = height_en  # Endoder input size - From Cell 5_9
-        sample_duration = frames2decode  # Decoder input size - From Cell 5_7
-        # Select frames per second of your source.
-        fps = 30
-        player = None
-        try:
-            # Create a video player.
-            player = utils.VideoPlayer(0 if use_webcam else source, flip=flip, fps=fps, skip_first_frames=skip_first_frames)
-            # Start capturing.
-            player.start()
-    
-            processing_times = collections.deque()
-            processing_time = 0
-            encoder_output = []
-            decoded_labels = [0, 0, 0]
-            decoded_top_probs = [0, 0, 0]
-            counter = 0
-            # Create a text template to show inference results over video.
-            text_inference_template = "Infer Time:{Time:.1f}ms,{fps:.1f}FPS"
-            text_template = "{label},{conf:.2f}%"
-    
-            while True:
-                counter = counter + 1
-                if kill_flag:
-                    break;
-                # Read a frame from the video stream.
-                frame = player.next()
-                if frame is None:
-                    print("Source ended")
-                    break
-    
-                scale = 1280 / max(frame.shape)
-    
-                # Adaptative resize for visualization.
-                if scale < 1:
-                    frame = cv2.resize(frame, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
-    
-                # Select one frame every two for processing through the encoder.
-                # After 16 frames are processed, the decoder will find the action,
-                # and the label will be printed over the frames.
-
-    
-                if counter % 60 == 0:
-                    # Preprocess frame before Encoder.
-                    (preprocessed, _) = preprocessing(frame, size)
-    
-                    # Measure processing time.
-                    start_time = time.time()
-    
-                    # Encoder Inference per frame
-                    encoder_output.append(encoder(preprocessed, compiled_model_en))
-    
-                    # Decoder inference per set of frames
-                    # Wait for sample duration to work with decoder model.
-                    if len(encoder_output) == sample_duration:
-                        decoded_output= simple_regression_compiled(torch.tensor(encoder_output).squeeze())
-                        encoder_output = []
-                        #print(decoded_output)
-                        lock.acquire()
-                        predictions.append(list(decoded_output[0]))
-                        predictions.remove(predictions[0])
-                        lock.release()
-    
-                    # Inference has finished. Display the results.
-                    stop_time = time.time()
-    
-                    # Calculate processing time.
-                    processing_times.append(stop_time - start_time)
-    
-                    # Use processing times from last 200 frames.
-                    if len(processing_times) > 200:
-                        processing_times.popleft()
-    
-                    # Mean processing time [ms]
-                    processing_time = np.mean(processing_times) * 1000
-                    fps = 1000 / processing_time
-                    
-    
-    
-        # ctrl-c
-        except KeyboardInterrupt:
-            print("Interrupted")
-            player.close()
-        # Any different error
-        except RuntimeError as e:
-            print(e)
-    run_ai_dj(True)
-
-
-if __name__ == '__main__':
+    #global predictions
     global kill_flag
+        
+    source = "1.mp4"
+
+    use_webcam = True
+
+    skip_first_frames = 0
+    flip = True
+    size = height_en  # Endoder input size - From Cell 5_9
+    sample_duration = frames2decode  # Decoder input size - From Cell 5_7
+    # Select frames per second of your source.
+    size = height_en  # Endoder input size - From Cell 5_9
+    sample_duration = frames2decode  # Decoder input size - From Cell 5_7
+    # Select frames per second of your source.
+    fps = 30
+    player = None
+    try:
+        # Create a video player.
+        player = utils.VideoPlayer(0 if use_webcam else source, flip=flip, fps=fps, skip_first_frames=skip_first_frames)
+        # Start capturing.
+        player.start()
+
+        processing_times = collections.deque()
+        processing_time = 0
+        encoder_output = []
+        decoded_labels = [0, 0, 0]
+        decoded_top_probs = [0, 0, 0]
+        counter = 0
+        # Create a text template to show inference results over video.
+        text_inference_template = "Infer Time:{Time:.1f}ms,{fps:.1f}FPS"
+        text_template = "{label},{conf:.2f}%"
+
+        while True:
+            counter = counter + 1
+            if kill_flag:
+                break;
+            # Read a frame from the video stream.
+            frame = player.next()
+            if frame is None:
+                print("Source ended")
+                break
+
+            scale = 1280 / max(frame.shape)
+
+            # Adaptative resize for visualization.
+            if scale < 1:
+                frame = cv2.resize(frame, None, fx=scale, fy=scale, interpolation=cv2.INTER_AREA)
+
+            # Select one frame every two for processing through the encoder.
+            # After 16 frames are processed, the decoder will find the action,
+            # and the label will be printed over the frames.
+
+            #time.sleep(.1)
+            if counter % 60 == 0:
+                # Preprocess frame before Encoder.
+                (preprocessed, _) = preprocessing(frame, size)
+
+                # Measure processing time.
+                start_time = time.time()
+
+                # Encoder Inference per frame
+                encoder_output.append(encoder(preprocessed, compiled_model_en))
+
+                # Decoder inference per set of frames
+                # Wait for sample duration to work with decoder model.
+                if len(encoder_output) == sample_duration:
+                    decoded_output= simple_regression_compiled(torch.tensor(encoder_output).squeeze())
+                    encoder_output = []
+                    #test += str(list(decoded_output[0]))
+                    if(frame[0][0][0] != 0 or frame[0][0][1] != 0):
+                        predictions.append(list(decoded_output[0]))
+                        
+                        if len(predictions) ==  20:
+                                                    
+                            ans = [0,0,0,0]
+                            for i in range(20):
+                                for j in range(4):
+                                    ans[j] += predictions[0][j]
+                            ans = [i/20.0 for i in ans]
+                            ans[2] = ans[2] * 180.0
+                            file = open("shared.txt","w")
+                            write_string = ""
+                            for i in ans:
+                                write_string += str(i)+","
+                            file.write(write_string)
+                            
+                            predictions = []
+
+                # Inference has finished. Display the results.
+                stop_time = time.time()
+
+                # Calculate processing time.
+                processing_times.append(stop_time - start_time)
+
+                # Use processing times from last 200 frames.
+                if len(processing_times) > 200:
+                    processing_times.popleft()
+
+                # Mean processing time [ms]
+                processing_time = np.mean(processing_times) * 1000
+                fps = 1000 / processing_time
+
+        # ctrl-c
+    except KeyboardInterrupt:
+        print("Interrupted")
+        player.close()
+    # Any different error
+    except RuntimeError as e:
+        print(e)
+if __name__ == '__main__':
     kill_flag = False;
     t1 = threading.Thread(target = constant_predict)
     t1.start()
-    app.run(debug=True)
+    
+    app.run(debug=True, threaded = True)
     try:
         while True:
             time.sleep(.1)
     except:
         kill_flag = True
         t1.join()
-    
+        

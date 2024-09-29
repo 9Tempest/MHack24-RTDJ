@@ -1,4 +1,4 @@
-# Python Script to Find Top 5 Most Similar Songs Based on Audio Features, Considering Recommendation Score
+# Python Script to Find Top 5 Most Similar Songs Based on Audio Features, Considering Recommendation Score and Uniqueness
 
 import pandas as pd
 from pymongo import MongoClient
@@ -25,6 +25,10 @@ def getSimilarSong(embeedings):
     audio_features_list = list(collection.find({}))
     df = pd.DataFrame(audio_features_list)
 
+    # Ensure 'recommendation_score' column exists, if not create and set default to 0
+    if 'recommendation_score' not in df.columns:
+        df['recommendation_score'] = 0  # Assign default value of 0 to missing recommendation scores
+    
     # Step 3: Define the input song features for similarity search
     input_song = {
         "track_name": "Your Input Track Name",
@@ -48,11 +52,21 @@ def getSimilarSong(embeedings):
     recommendation_scores = df.loc[non_perfect_match_indices, 'recommendation_score'].fillna(0).values  # Default score of 0 if not found
     adjusted_similarity_scores = similarity_scores[non_perfect_match_indices] / (1 + recommendation_scores)  # Penalize songs with higher recommendation counts
 
-    # Step 8: Sort the songs by adjusted similarity score and get the top 5
-    top_5_indices = non_perfect_match_indices[np.argsort(adjusted_similarity_scores)[-5:][::-1]]
+    # Step 8: Sort the songs by adjusted similarity score
+    sorted_indices = non_perfect_match_indices[np.argsort(adjusted_similarity_scores)[::-1]]
 
-    # Step 9: Retrieve the most similar songs' details
-    top_5_songs = df.iloc[top_5_indices]
+    # Step 9: Retrieve the most similar songs' details, ensuring uniqueness
+    unique_songs = set()
+    top_songs_data = []
+    for idx in sorted_indices:
+        song = df.iloc[idx]
+        track_id = song['track_id']
+
+        if track_id not in unique_songs:
+            unique_songs.add(track_id)
+            top_songs_data.append(song)
+            if len(top_songs_data) >= 5:  # Stop once we have 5 unique songs
+                break
 
     # Step 10: Authenticate with Spotify using Spotipy
     sp = Spotify(auth_manager=SpotifyOAuth(
@@ -62,12 +76,11 @@ def getSimilarSong(embeedings):
         scope="user-modify-playback-state,user-read-playback-state"
     ))
 
-    # Step 11: Print out the details of the top 5 most similar songs
+    # Step 11: Print out the details of the top 5 unique most similar songs
     print(embeedings)
-    print("Top 5 Most Similar Songs (Considering Recommendation Score):")
+    print("Top 5 Most Similar Unique Songs (Considering Recommendation Score):")
 
-    top_songs_data = []
-    for idx, song in top_5_songs.iterrows():
+    for song in top_songs_data:
         track_uri = song['track_id']  # Assuming 'track_id' is the Spotify URI for the song
         print(f"Track ID: {song['track_id']}")
         print(f"Track Name: {song['track_name']}")
@@ -76,7 +89,6 @@ def getSimilarSong(embeedings):
         print(f"Tempo: {song['tempo']}")
         print(f"Valence: {song['valence']}")
         print(f"track_uri: {track_uri}")
-        top_songs_data.append(track_uri)
 
         # Step 12: Update the recommendation score for each song in the database
         collection.update_one(
@@ -84,9 +96,9 @@ def getSimilarSong(embeedings):
             {'$inc': {'recommendation_score': 1}}  # Increment recommendation score by 1
         )
 
-    # Return the URIs of the top 5 most similar songs
-    return top_songs_data
+    # Return the URIs of the top 5 most similar unique songs
+    return [song['track_id'] for song in top_songs_data]
 
 # Example usage
 if __name__ == '__main__':
-    print(getSimilarSong([0.7, 0.8, 120.0, 0.5]))
+    print(getSimilarSong([0.7, 0.8, 120.0, 0.5])) #Add in the model weights here.

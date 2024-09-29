@@ -315,8 +315,8 @@ class VideoPlayer:
             t1 = time.time()
             ret, frame = self.__cap.read()
             if not ret:
+                
                 break
-
             # fulfill target fps
             if 1 / self.__output_fps < time.time() - prev_time:
                 prev_time = time.time()

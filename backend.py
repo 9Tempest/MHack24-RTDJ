@@ -257,7 +257,7 @@ def get_floats():
         except:
             continue
 
-
+import pose_estimation
 
 def constant_predict():
     
@@ -329,7 +329,10 @@ def constant_predict():
                 start_time = time.time()
 
                 # Encoder Inference per frame
-                encoder_output.append(encoder(preprocessed, compiled_model_en))
+                e_o = encoder(preprocessed, compiled_model_en)
+                encoded_poses= pose_estimation.encoder_poses(frame,cv2.resize(frame, (456, 256), interpolation=cv2.INTER_AREA).transpose((2, 0, 1))[np.newaxis, ...])
+                e_o = np.concatenate((e_o.flatten(),encoded_poses.flatten())).tolist()
+                encoder_output.append(e_o)
 
                 # Decoder inference per set of frames
                 # Wait for sample duration to work with decoder model.

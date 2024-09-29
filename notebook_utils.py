@@ -262,7 +262,7 @@ class VideoPlayer:
         import cv2
 
         self.cv2 = cv2  # This is done to access the package in class methods
-        self.__cap = cv2.VideoCapture(source)
+        self.__cap = cv2.VideoCapture(source + cv2.CAP_DSHOW if source == 0 else source)
         # try HD by default to get better video quality
         self.__cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
         self.__cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)

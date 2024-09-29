@@ -1,0 +1,254 @@
+[
+    {
+        "track_id": "3CzWF2ZTazx5caTSLckEj5",
+        "track_name": "ID - ID",
+        "danceability": 0.556,
+        "energy": 0.742,
+        "tempo": 116.958,
+        "valence": 0.284,
+        "video_file": "1.mp4"
+    },
+    {
+        "track_id": "4xA64ksexBRqMc7VZC8HY2",
+        "track_name": "VOLCA",
+        "danceability": 0.727,
+        "energy": 0.926,
+        "tempo": 135.01,
+        "valence": 0.417,
+        "video_file": "2.mp4"
+    },
+    {
+        "track_id": "7g9V79P2n81ombys80TSYa",
+        "track_name": "Stars",
+        "danceability": 0.658,
+        "energy": 0.662,
+        "tempo": 123.015,
+        "valence": 0.254,
+        "video_file": "11.mp4"
+    },
+    {
+        "track_id": "5xO5xLmj9LpWABgmIX4zF2",
+        "track_name": "Firmament",
+        "danceability": 0.705,
+        "energy": 0.672,
+        "tempo": 124.0,
+        "valence": 0.284,
+        "video_file": "13.mp4"
+    },
+    {
+        "track_id": "1dWWpbUHni0mmv9aaVLhcH",
+        "track_name": "Asa",
+        "danceability": 0.699,
+        "energy": 0.884,
+        "tempo": 128.078,
+        "valence": 0.287,
+        "video_file": "15.mp4"
+    },
+    {
+        "track_id": "0iUwIi7QYV7ecwiwx5pCgd",
+        "track_name": "Touch My Body",
+        "danceability": 0.575,
+        "energy": 0.922,
+        "tempo": 147.038,
+        "valence": 0.978,
+        "video_file": "20.mp4"
+    },
+    {
+        "track_id": "2OmBnJNU8POZJF7c1ljtXe",
+        "track_name": "Summer Groove",
+        "danceability": 0.772,
+        "energy": 0.973,
+        "tempo": 140.011,
+        "valence": 0.836,
+        "video_file": "21.mp4"
+    },
+    {
+        "track_id": "5azE1OgMa2Zdd5qEOmOpps",
+        "track_name": "Earthquake",
+        "danceability": 0.747,
+        "energy": 0.821,
+        "tempo": 145.033,
+        "valence": 0.787,
+        "video_file": "22.mp4"
+    },
+    {
+        "track_id": "7kBYPyaxF3oE9EgjOMpGKs",
+        "track_name": "Reach Out",
+        "danceability": 0.667,
+        "energy": 0.94,
+        "tempo": 142.995,
+        "valence": 0.875,
+        "video_file": "23.mp4"
+    },
+    {
+        "track_id": "7nfCb5stHePZ6OoE7HDTe2",
+        "track_name": "We Want More",
+        "danceability": 0.682,
+        "energy": 0.944,
+        "tempo": 149.0,
+        "valence": 0.735,
+        "video_file": "24.mp4"
+    },
+    {
+        "track_id": "2VtxdAH96cGcj1QzjpbHjA",
+        "track_name": "Drop the Pressure",
+        "danceability": 0.817,
+        "energy": 0.605,
+        "tempo": 128.995,
+        "valence": 0.479,
+        "video_file": "25.mp4"
+    },
+    {
+        "track_id": "1TcF5F10EN17vraisG1gQv",
+        "track_name": "Happier (feat. Clementine Douglas)",
+        "danceability": 0.785,
+        "energy": 0.831,
+        "tempo": 126.056,
+        "valence": 0.673,
+        "video_file": "26.mp4"
+    },
+    {
+        "track_id": "3jEElnKbUrSZ2fPuvR5l08",
+        "track_name": "Be My Lover - remix",
+        "danceability": 0.425,
+        "energy": 0.984,
+        "tempo": 127.86,
+        "valence": 0.419,
+        "video_file": "27.mp4"
+    },
+    {
+        "track_id": "18foj3KoiCQSEyXzOyy0kh",
+        "track_name": "Need Me - Short Mix",
+        "danceability": 0.702,
+        "energy": 0.92,
+        "tempo": 146.007,
+        "valence": 0.673,
+        "video_file": "28.mp4"
+    },
+    {
+        "track_id": "3GiORO0zRwRT3g9CCklzkQ",
+        "track_name": "It's That Time - FISHER Remix",
+        "danceability": 0.865,
+        "energy": 0.978,
+        "tempo": 130.008,
+        "valence": 0.936,
+        "video_file": "29.mp4"
+    },
+    {
+        "track_id": "3WOhcATHxK2SLNeP5W3v1v",
+        "track_name": "Guess featuring Billie Eilish",
+        "danceability": 0.776,
+        "energy": 0.667,
+        "tempo": 130.019,
+        "valence": 0.618,
+        "video_file": "30.mp4"
+    },
+    {
+        "track_id": "3KliPMvk1EvFZu9cvkj8p1",
+        "track_name": "Work Bitch",
+        "danceability": 0.629,
+        "energy": 0.824,
+        "tempo": 128.01,
+        "valence": 0.852,
+        "video_file": "31.mp4"
+    },
+    {
+        "track_id": "6btyEL6NwUa97Nex9cZFvo",
+        "track_name": "Pump It",
+        "danceability": 0.649,
+        "energy": 0.931,
+        "tempo": 153.645,
+        "valence": 0.744,
+        "video_file": "32.mp4"
+    },
+    {
+        "track_id": "3kq6vI5yFKpse8pTHaSxyY",
+        "track_name": "Baby - Paul Sirrell Remix",
+        "danceability": 0.597,
+        "energy": 0.989,
+        "tempo": 136.993,
+        "valence": 0.622,
+        "video_file": "33.mp4"
+    },
+    {
+        "track_id": "0MeGiBDDodJwa1iHnCgG3q",
+        "track_name": "My Mama Dropped LSD in the 90's",
+        "danceability": 0.691,
+        "energy": 0.963,
+        "tempo": 147.998,
+        "valence": 0.55,
+        "video_file": "34.mp4"
+    },
+    {
+        "track_id": "5NNOhlMKhGFODsPv2O4Nuq",
+        "track_name": "Baby",
+        "danceability": 0.63,
+        "energy": 0.945,
+        "tempo": 146.001,
+        "valence": 0.825,
+        "video_file": "35.mp4"
+    },
+    {
+        "track_id": "1bJRd2ey6ER7neSxZwYdAG",
+        "track_name": "Kisses (feat. bbyclose)",
+        "danceability": 0.793,
+        "energy": 0.779,
+        "tempo": 142.002,
+        "valence": 0.687,
+        "video_file": "36.mp4"
+    },
+    {
+        "track_id": "26xw61UppTKPySjw3RLvx6",
+        "track_name": "Move My Body (feat. Lucy Dye)",
+        "danceability": 0.548,
+        "energy": 0.99,
+        "tempo": 144.987,
+        "valence": 0.669,
+        "video_file": "37.mp4"
+    },
+    {
+        "track_id": "4iqtDvbICWuBERMTz9cz41",
+        "track_name": "Call Me",
+        "danceability": 0.608,
+        "energy": 0.995,
+        "tempo": 144.951,
+        "valence": 0.96,
+        "video_file": "38.mp4"
+    },
+    {
+        "track_id": "0247qiEpa3RtYaNoHF0Na6",
+        "track_name": "Here We Go",
+        "danceability": 0.628,
+        "energy": 0.938,
+        "tempo": 149.991,
+        "valence": 0.738,
+        "video_file": "39.mp4"
+    },
+    {
+        "track_id": "76x1mIsCz46excW50sehDt",
+        "track_name": "It's That Time - Dimension Remix",
+        "danceability": 0.698,
+        "energy": 0.981,
+        "tempo": 173.989,
+        "valence": 0.524,
+        "video_file": "40.mp4"
+    },
+    {
+        "track_id": "4NOoZeetavZyquNLaGyxXC",
+        "track_name": "No Time (feat. SadBoi)",
+        "danceability": 0.866,
+        "energy": 0.925,
+        "tempo": 138.005,
+        "valence": 0.547,
+        "video_file": "41.mp4"
+    },
+    {
+        "track_id": "7k5Yq1u7BjrhlmX13cyf0m",
+        "track_name": "Spectrum",
+        "danceability": 0.574,
+        "energy": 0.873,
+        "tempo": 123.092,
+        "valence": 0.111,
+        "video_file": "42.mp4"
+    }
+]

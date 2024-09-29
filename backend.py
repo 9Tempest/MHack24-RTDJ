@@ -1,4 +1,3 @@
-from flask import Flask, jsonify
 import random
 import threading
 import collections
@@ -236,27 +235,6 @@ from spotify_api import getSimilarSong
 
 lock = threading.Lock()
 
-app = Flask(__name__)
-from multiprocessing import Manager
-import time
-
-# Initialize Flask app
-app = Flask(__name__)
-
-
-
-@app.route('/get_floats', methods=['GET'])
-def get_floats():
-    for i in range(5):
-        try:
-            file = open("shared.txt","r")
-            ans = [float(i) for i in file.read().split(',')[0:4]]
-            #print(test)
-            # Return the floats in a JSON response
-            return jsonify(getSimilarSong(ans))
-        except:
-            continue
-
 import pose_estimation
 
 def constant_predict():
@@ -382,14 +360,4 @@ def constant_predict():
         print(e)
 if __name__ == '__main__':
     kill_flag = False;
-    t1 = threading.Thread(target = constant_predict)
-    t1.start()
-    
-    app.run(debug=True, threaded = True)
-    try:
-        while True:
-            time.sleep(.1)
-    except:
-        kill_flag = True
-        t1.join()
-        
+    constant_predict()
